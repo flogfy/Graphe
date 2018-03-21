@@ -193,11 +193,26 @@ public class Path {
      * 
      * @return true if the path is valid, false otherwise.
      * 
-     * @deprecated Need to be implemented.
+     
      */
     public boolean isValid() {
-        // TODO:
-        return false;
+        boolean valide=true;
+        if(isEmpty()==true || size()==1) {
+        	return(valide);
+        }
+        else {
+        	Node noeuddestination=arcs.get(0).getDestination();
+        	for(int i=1;i<this.arcs.size()-1;i++) {
+        		Node noeudorigine=arcs.get(i).getOrigin();
+        		if(noeudorigine.getId()!=noeuddestination.getId()) {
+        			valide=false;
+        			}
+        		noeuddestination=arcs.get(i).getDestination();
+        		
+        	}
+        }
+        
+        return valide;
     }
 
     /**
@@ -205,11 +220,14 @@ public class Path {
      * 
      * @return Total length of the path (in meters).
      * 
-     * @deprecated Need to be implemented.
      */
     public float getLength() {
         // TODO:
-        return 0;
+    	float somme=0;
+    	for(Arc arc :arcs) {
+    		somme+=arc.getLength();
+    	}
+        return somme;
     }
 
     /**
@@ -220,11 +238,14 @@ public class Path {
      * @return Time (in seconds) required to travel this path at the given speed (in
      *         kilometers-per-hour).
      * 
-     * @deprecated Need to be implemented.
      */
     public double getTravelTime(double speed) {
         // TODO:
-        return 0;
+    	double somme=0;
+    	for(Arc arc :arcs) {
+    		somme+=arc.getTravelTime(speed);
+    	}
+        return somme;
     }
 
     /**
@@ -233,11 +254,15 @@ public class Path {
      * 
      * @return Minimum travel time to travel this path (in seconds).
      * 
-     * @deprecated Need to be implemented.
+
      */
     public double getMinimumTravelTime() {
         // TODO:
-        return 0;
+    	double somme=0;
+    	for(Arc arc :arcs) {
+    		somme+=arc.getMinimumTravelTime();
+    	}
+        return somme;
     }
 
 }
