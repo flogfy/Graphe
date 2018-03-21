@@ -209,7 +209,11 @@ public class Path {
      */
     public float getLength() {
         // TODO:
-        return 0;
+    	float somme=0;
+    	for(Arc arc :arcs) {
+    		somme+=arc.getLength();
+    	}
+        return somme;
     }
 
     /**
@@ -224,7 +228,11 @@ public class Path {
      */
     public double getTravelTime(double speed) {
         // TODO:
-        return 0;
+    	double somme=0;
+    	for(Arc arc :arcs) {
+    		somme+=arc.getTravelTime(speed);
+    	}
+        return somme;
     }
 
     /**
@@ -237,7 +245,11 @@ public class Path {
      */
     public double getMinimumTravelTime() {
         // TODO:
-        return 0;
+    	double somme=0;
+    	for(Arc arc :arcs) {
+    		somme+=arc.getMinimumTravelTime();
+    	}
+        return somme;
     }
 
 }
