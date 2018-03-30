@@ -1,5 +1,4 @@
 package org.insa.graph;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,12 +24,43 @@ public class Path {
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
      * 
-     * @deprecated Need to be implemented.
-     */
+        */
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
+      	if(nodes.size()==1) { /* cas ou il y a qu'un seul noeud */
+    		return new Path(graph, nodes.iterator().next()); /* récupère un iterator de la liste de noeud
+    		et on prend le 1er*/
+    	}
+    	/*java.util.Iterator<Node> it = nodes.iterator(); peut servir pour faire un while avec it.next,
+    	 * et jusqu'au test it.hasnext*/
+    	
+    	if(nodes.size()==0) { /* cas ou il y a pas de noeud */
+    		return new Path(graph);
+    	}
+
         List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
+        Arc arcmini=null;
+	        Node noeudmemoire=null;
+	        for(Node noeud:nodes) {
+	        	if (noeudmemoire!=null) {
+	        		List<Arc> successeurs=noeudmemoire.getSuccessors();
+	        		double tempsmini= Double.MAX_VALUE;/*Constante de la classe Double*/
+	                for(Arc arcok : successeurs) {
+	                	if(arcok.getDestination()==noeud) {
+	                		if(tempsmini>arcok.getMinimumTravelTime()) {
+	                			tempsmini=arcok.getMinimumTravelTime();
+	                			arcmini=arcok;
+	                		}
+	                	}
+	                 }
+	                if(arcmini==null) {
+	                	throw new IllegalArgumentException();
+	                }
+	                arcs.add(arcmini);
+	        	}
+	        	noeudmemoire=noeud;
+	        	
+	        }
         return new Path(graph, arcs);
     }
 
@@ -46,14 +76,49 @@ public class Path {
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
      * 
-     * @deprecated Need to be implemented.
+     * 
      */
     public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
-        List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
-        return new Path(graph, arcs);
-    }
+    	if(nodes.size()==1) { /* cas ou il y a qu'un seul noeud */
+    		return new Path(graph, nodes.iterator().next()); /* récupère un iterator de la liste de noeud
+    		et on prend le 1er*/
+    	}
+    	/*java.util.Iterator<Node> it = nodes.iterator(); peut servir pour faire un while avec it.next,
+    	 * et jusqu'au test it.hasnext*/
+    	
+    	if(nodes.size()==0) { /* cas ou il y a pas de noeud */
+    		return new Path(graph);
+    	}
+
+    		
+    		
+    	 List<Arc> arcs = new ArrayList<Arc>();
+         Arc arcmini=null;
+ 	        Node noeudmemoire=null;
+ 	        for(Node noeud:nodes) {
+ 	        	if (noeudmemoire!=null) {
+ 	        		List<Arc> successeurs=noeudmemoire.getSuccessors();
+ 	        		double tempsmini= Double.MAX_VALUE;/*Constante de la classe Double*/
+ 	                for(Arc arcok : successeurs) {
+ 	                	if(arcok.getDestination()==noeud) {
+ 	                		if(tempsmini>arcok.getLength()) {
+ 	                			tempsmini=arcok.getLength();
+ 	                			arcmini=arcok;
+ 	                		}
+ 	                	}
+ 	                 }
+ 	                if(arcmini==null) {
+ 	                	throw new IllegalArgumentException();
+ 	                }
+ 	                arcs.add(arcmini);
+ 	        	}
+ 	        	noeudmemoire=noeud;
+ 	        	
+ 	        }
+         return new Path(graph, arcs);
+     }
+
 
     /**
      * Concatenate the given paths.
