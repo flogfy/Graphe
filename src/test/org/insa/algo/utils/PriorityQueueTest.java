@@ -101,6 +101,14 @@ public abstract class PriorityQueueTest {
         // Empty queue
         objects.add(new TestParameters<>(new MutableInteger[0], new int[0]));
 
+     // Queue with 7 elements.
+        objects.add(
+                new TestParameters<>(
+                        Arrays.stream(new int[]{ 1, 7, 4, 8, 9, 6, 5 })
+                                .mapToObj(MutableInteger::new).toArray(MutableInteger[]::new),
+                        new int[]{ 2, 0, 1, 3, 4, 5, 6 }));
+        
+        
         // Queue with 50 elements from 0 to 49, inserted in order and deleted in order.
         objects.add(new TestParameters<>(
                 IntStream.range(0, 50).mapToObj(MutableInteger::new).toArray(MutableInteger[]::new),

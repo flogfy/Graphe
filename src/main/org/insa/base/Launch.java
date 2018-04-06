@@ -72,7 +72,7 @@ public class Launch {
         Path path =pathReader.readPath(graph);
 
         // TODO: Draw the path.
-        /*PathOverlay path2=drawing.drawPath(path);*/
+        drawing.drawPath(path);
     }
 
 }

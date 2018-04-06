@@ -43,9 +43,8 @@ public class Path {
 	        Node noeudmemoire=null;
 	        for(Node noeud:nodes) {
 	        	if (noeudmemoire!=null) {
-	        		List<Arc> successeurs=noeudmemoire.getSuccessors();
 	        		double tempsmini= Double.MAX_VALUE;/*Constante de la classe Double*/
-	                for(Arc arcok : successeurs) {
+	                for(Arc arcok : noeudmemoire) {
 	                	if(arcok.getDestination()==noeud) {
 	                		if(tempsmini>arcok.getMinimumTravelTime()) {
 	                			tempsmini=arcok.getMinimumTravelTime();
@@ -98,9 +97,8 @@ public class Path {
  	        Node noeudmemoire=null;
  	        for(Node noeud:nodes) {
  	        	if (noeudmemoire!=null) {
- 	        		List<Arc> successeurs=noeudmemoire.getSuccessors();
  	        		double tempsmini= Double.MAX_VALUE;/*Constante de la classe Double*/
- 	                for(Arc arcok : successeurs) {
+ 	                for(Arc arcok : noeudmemoire) {
  	                	if(arcok.getDestination()==noeud) {
  	                		if(tempsmini>arcok.getLength()) {
  	                			tempsmini=arcok.getLength();
