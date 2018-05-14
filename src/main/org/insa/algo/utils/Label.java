@@ -1,10 +1,10 @@
 package org.insa.algo.utils;
 
-import org.insa.graph.Node;
+import org.insa.graph.*;
 
 public class Label implements Comparable<Label>{
 	private double cout;
-	private Node precedent;
+	private Arc precedent;
 	private boolean marquage;
 	private int id;
 	
@@ -30,11 +30,11 @@ public class Label implements Comparable<Label>{
 		this.cout = cout;
 	}
 
-	public Node getPrecedent() {
+	public Arc getPrecedent() {
 		return precedent;
 	}
 
-	public void setPrecedent(Node precedent) {
+	public void setPrecedent(Arc precedent) {
 		this.precedent = precedent;
 	}
 
