@@ -2,7 +2,6 @@ package org.insa.algo.shortestpath;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.lang.Math;
 
 import org.insa.algo.AbstractSolution.Status;
 import org.insa.algo.utils.BinaryHeap;
@@ -25,22 +24,28 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     {
         ShortestPathData data = getInputData();
         Graph graph = data.getGraph();
-        //final int nbNodes = graph.size();
+        final int nbNodes = graph.size();
 		// Initialize array of distances.
-        ArrayList<Label> listelabel = new ArrayList<>();
+        //ArrayList<Label> listelabel = new ArrayList<>(nbNodes);
+        Label[] listelabel = new Label[nbNodes];
         BinaryHeap<Label> distances = new BinaryHeap<Label>();
-        for (Node n : graph) {
+     /*   for (Node n : graph) {
         	
         	Label labeli=new Label(n);
         	if(n.getId()==data.getOrigin().getId())
     			{
+        			notifyOriginProcessed(n);
     				labeli.setCout(0); //on met le 1er noeud à 0
     				distances.insert(labeli);
     			}
 
-        	listelabel.add(labeli);
-        	
-        }
+        	listelabel.add(labeli);*/
+        Label labeli=new Label(data.getOrigin());
+    	labeli.setCout(0); //on met le 1er noeud à 0
+        notifyOriginProcessed(data.getOrigin());
+        listelabel[data.getOrigin().getId()]=labeli;
+        distances.insert(labeli);
+        
 
 
        
@@ -50,7 +55,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		
         
         //Iterations
-        
+        Label lab;
         while(!distances.isEmpty()) //tq l'arbre n'est pas vide
         {
 
@@ -58,28 +63,31 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	distances.remove(x);
         	if(x.equals(data.getDestination())) 
         	{ //si on est arrivées au bout
+        		notifyDestinationReached(x.getNode());
         		break;
         	}
         	x.setMarquage(true);
-
+        	notifyNodeMarked(x.getNode());
 
         	for (Arc arccc : graph.get(x.getId())) //tous les arcs entrants ou sortants de x
         	{
-        		if(arccc.getDestination()!=graph.get(x.getId())) //tous les arcs qui partent de x
+        		if(arccc.getDestination()!=x.getNode()) //tous les arcs qui partent de x
         		{
         			Node y=arccc.getDestination(); //on recupere le successeur
-
-        			for(Label lab : listelabel)
+        			if(listelabel[y.getId()]==null)
         			{
-
-        				if(lab.getId()==y.getId()) //label qui correspond au sucesseur
+        				lab = new Label(y);
+        				listelabel[y.getId()]=lab;
+        			}
+        			else
+        			{
+        				lab = listelabel[y.getId()];
+        			}
+        				if((lab.isMarquage()==false)&&(lab.getCout()>x.getCout()+data.getCost(arccc))) //label qui correspond au successeur
         				{
-        					if(lab.isMarquage()==false)
-        					{
-
-        						if(lab.getCout()>x.getCout()+data.getCost(arccc))
-        						{
+        				
         							lab.setCout(x.getCout()+data.getCost(arccc));
+        							notifyNodeReached(y);
         							try
         							{
         								distances.remove(lab);
@@ -94,14 +102,14 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         							}
 
 
-        						}
-        					}
+        						
+        					
         				}
 
         			}
         		}
         	}
-        }
+        
       //Partir de la destination ( data.getdestination)  en retrouvant le label associé a data destination,
         //et a chaque fois on regarde le precedent jusqu"a retomber sur data.getOrigin		
         ShortestPathSolution solution = null;
@@ -109,17 +117,14 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         Node noeudintermediaire = data.getDestination();
         while(data.getOrigin()!=noeudintermediaire)
         {
-	        for(Label l : listelabel) 
-			{
-	        	if(l.getId()==noeudintermediaire.getId())
-	        	{
+	        Label l=listelabel[noeudintermediaire.getId()];
 	        		
-	    					arcs.add(l.getPrecedent());
-	    					noeudintermediaire=l.getPrecedent().getOrigin();
-	    					break;
+	    	arcs.add(l.getPrecedent());
+	    	noeudintermediaire=l.getPrecedent().getOrigin();
+	    	
 	    			
-	        	}
-			}
+	        	
+			
         }
     	// Reverse the path...
 		Collections.reverse(arcs);

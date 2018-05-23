@@ -7,14 +7,18 @@ public class Label implements Comparable<Label>{
 	private Arc precedent;
 	private boolean marquage;
 	private int id;
+	private Node n;
 	
 	public Label(Node N) {
 		this.cout=Double.POSITIVE_INFINITY;
 		this.precedent=null;
 		this.marquage=false;
 		this.id = N.getId();
+		this.n=N;
 	}
 
+	
+	
 	@Override
 	public int compareTo(Label o) {
 		// TODO Auto-generated method stub
@@ -22,6 +26,12 @@ public class Label implements Comparable<Label>{
 	}
 	
 
+	public Node getNode() {
+		return n;
+	}
+	
+	
+	
 	public double getCout() {
 		return cout;
 	}
