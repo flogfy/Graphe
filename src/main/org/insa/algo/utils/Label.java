@@ -25,7 +25,7 @@ public class Label implements Comparable<Label>{
 		return comparer(o);
 	}
 	public int comparer(Label o) {
-	return (int)(this.getCouttotal()-o.getCouttotal());
+	return (int)(this.cout-o.getCout());
 	}
 	public Node getNode() {
 		return n;

@@ -2,7 +2,7 @@ package org.insa.algo.utils;
 
 import org.insa.graph.Node;
 
-
+import java.lang.Math;
 
 
 public class LabelStar extends Label{
@@ -12,12 +12,12 @@ public class LabelStar extends Label{
 	public LabelStar(Node N) {
 		super(N);
 		this.coutdestination=Double.POSITIVE_INFINITY;
-		this.couttotal=Double.POSITIVE_INFINITY;;
+		this.couttotal=Double.POSITIVE_INFINITY;
 		
 		// TODO Auto-generated constructor stub
 	}
 	public int comparer(LabelStar o) {
-		if (this.couttotal-o.getCouttotal()==0) {
+		if (Math.abs(this.couttotal-o.getCouttotal())<1) {
 			return(int)(this.coutdestination-o.getCoutdestination());
 		}
 		else

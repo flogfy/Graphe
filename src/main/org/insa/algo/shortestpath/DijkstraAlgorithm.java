@@ -13,14 +13,16 @@ import org.insa.graph.Node;
 import org.insa.graph.Path;
 
 
-public class DijkstraAlgorithm extends ShortestPathAlgorithm {
+public class DijkstraAlgorithm extends ShortestPathAlgorithm 
+{
 
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
     }
 
     @Override
-	public ShortestPathSolution doRun() {
+	public ShortestPathSolution doRun() 
+    {
         ShortestPathData data = getInputData();
         Graph graph = data.getGraph();
         final int nbNodes = graph.size();
@@ -118,7 +120,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	solution=new ShortestPathSolution(data, Status.INFEASIBLE, null);
         	return solution;
 		}
-       
         ArrayList<Arc> arcs = new ArrayList<>();
         Node noeudintermediaire = data.getDestination();
         while(data.getOrigin()!=noeudintermediaire)
@@ -133,10 +134,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
 		// Create the final solution.
 		solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
-
-
-        
         
         return solution;
-}
+    }
 } 
