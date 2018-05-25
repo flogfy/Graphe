@@ -20,8 +20,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     }
 
     @Override
-    protected ShortestPathSolution doRun() 
-    {
+	public ShortestPathSolution doRun() {
         ShortestPathData data = getInputData();
         Graph graph = data.getGraph();
         final int nbNodes = graph.size();
@@ -56,19 +55,20 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         //Iterations
         Label lab;
+        boolean realisable=false;
         while(!distances.isEmpty()) //tq l'arbre n'est pas vide
         {
 
         	Label x = distances.findMin();
         	distances.remove(x);
-        	if(x.equals(data.getDestination())) 
+        	if((x.getNode()).equals(data.getDestination())) 
         	{ //si on est arrivées au bout
         		notifyDestinationReached(x.getNode());
+        		realisable=true;
         		break;
         	}
         	x.setMarquage(true);
         	notifyNodeMarked(x.getNode());
-
         	for (Arc arccc : graph.get(x.getId())) //tous les arcs entrants ou sortants de x
         	{
         		if(arccc.getDestination()!=x.getNode()) //tous les arcs qui partent de x
@@ -108,31 +108,35 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
         			}
         		}
+        		
         	}
         
       //Partir de la destination ( data.getdestination)  en retrouvant le label associé a data destination,
-        //et a chaque fois on regarde le precedent jusqu"a retomber sur data.getOrigin		
+        //et a chaque fois on regarde le precedent jusqu"a retomber sur data.getOrigin
         ShortestPathSolution solution = null;
+        if(!realisable) {
+        	solution=new ShortestPathSolution(data, Status.INFEASIBLE, null);
+        	return solution;
+		}
+       
         ArrayList<Arc> arcs = new ArrayList<>();
         Node noeudintermediaire = data.getDestination();
         while(data.getOrigin()!=noeudintermediaire)
         {
-	        Label l=listelabel[noeudintermediaire.getId()];
-	        		
-	    	arcs.add(l.getPrecedent());
-	    	noeudintermediaire=l.getPrecedent().getOrigin();
-	    	
-	    			
-	        	
-			
+	        Label l=listelabel[noeudintermediaire.getId()];	
+	        arcs.add(l.getPrecedent());
+	        noeudintermediaire=l.getPrecedent().getOrigin();
         }
+        
     	// Reverse the path...
 		Collections.reverse(arcs);
 
 		// Create the final solution.
 		solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
-        // TODO:
+
+
+        
+        
         return solution;
 }
-    
-}
+} 

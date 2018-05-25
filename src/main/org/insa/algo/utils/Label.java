@@ -22,10 +22,11 @@ public class Label implements Comparable<Label>{
 	@Override
 	public int compareTo(Label o) {
 		// TODO Auto-generated method stub
-		return (int)(this.cout-o.cout);
+		return comparer(o);
 	}
-	
-
+	public int comparer(Label o) {
+	return (int)(this.getCouttotal()-o.getCouttotal());
+	}
 	public Node getNode() {
 		return n;
 	}
@@ -34,6 +35,9 @@ public class Label implements Comparable<Label>{
 	
 	public double getCout() {
 		return cout;
+	}
+	public double getCouttotal() {
+		return(this.cout);
 	}
 
 	public void setCout(double cout) {
