@@ -145,8 +145,8 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     @Override
     public void remove(E x) throws ElementNotFoundException {
     	int index=this.array.indexOf(x);
-    	 System.out.println("index="+index+" element= "+x);
-    	 System.out.println("size-1="+(this.currentSize-1));
+    	 //System.out.println("index="+index+" element= "+x);
+    	 //System.out.println("size-1="+(this.currentSize-1));
     	if (index==-1 || index>this.currentSize-1){
     		throw new ElementNotFoundException(x);
     	}
@@ -154,22 +154,22 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     		deleteMin();
     	}
     	else if(index==this.currentSize-1) {
-    		System.out.println("Dernier element");
+    		//System.out.println("Dernier element");
     		this.array.remove(this.currentSize-1);
 			this.currentSize--;
     	}
     	else {
     		
     				E lastelement=this.array.get(this.currentSize-1);
-    				System.out.println(this.array);
+    				//System.out.println(this.array);
     				this.arraySet(index, lastelement);
     				//System.out.println(this.array);
     				this.currentSize--;
     				//System.out.println(this.array);
     				percolateDown(index);
     				percolateUp(index);
-    				System.out.println(this.array);
-    				print();
+    				//System.out.println(this.array);
+    				//print();
     				
         	}
     }

@@ -27,7 +27,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm
         LabelStar[] listeLabelStar = new LabelStar[nbNodes];
         BinaryHeap<Label> distances = new BinaryHeap<Label>();
      
-        LabelStar LabelStari=new LabelStar(data.getOrigin());
+        LabelStar LabelStari=new LabelStar(data.getOrigin(),data.getDestination());
     	LabelStari.setCout(0); //on met le 1er noeud à 0
     	LabelStari.setCouttotal((0));
         notifyOriginProcessed(data.getOrigin());
@@ -42,47 +42,51 @@ public class AStarAlgorithm extends DijkstraAlgorithm
 
         	Label x = distances.findMin();
         	distances.remove(x);
-        	if((x.getNode()).equals(data.getDestination())) 
+        	LabelStar xx=(LabelStar) x;
+        	if((xx.getNode()).equals(data.getDestination())) 
         	{ //si on est arrivées au bout
-        		notifyDestinationReached(x.getNode());
+        		notifyDestinationReached(xx.getNode());
         		realisable=true;
         		break;
         	}
-        	x.setMarquage(true);
-        	notifyNodeMarked(x.getNode());
-        	for (Arc arccc : graph.get(x.getId())) //tous les arcs entrants ou sortants de x
+        	xx.setMarquage(true);
+        	notifyNodeMarked(xx.getNode());
+        	for (Arc arccc : graph.get(xx.getId())) //tous les arcs entrants ou sortants de x
         	{
-        		if(arccc.getDestination()!=x.getNode()) //tous les arcs qui partent de x
+        		if (!data.isAllowed(arccc)) {
+					continue;
+        		}
+        		if(arccc.getDestination()!=xx.getNode()) //tous les arcs qui partent de x
         		{
         			Node y=arccc.getDestination(); //on recupere le successeur
         			if(listeLabelStar[y.getId()]==null)
         			{
-        				lab = new LabelStar(y);
+        				lab = new LabelStar(y,data.getDestination());
         				listeLabelStar[y.getId()]=lab;
         			}
         			else
         			{
         				lab = listeLabelStar[y.getId()];
         			}
-        				if((lab.isMarquage()==false)&&(lab.getCouttotal()>x.getCouttotal()+data.getCost(arccc))) //LabelStar qui correspond au successeur
+        				if((lab.isMarquage()==false)&&(lab.getCouttotal()>(xx.getCouttotal()+data.getCost(arccc)))) //LabelStar qui correspond au successeur
         				{
         				
-        							lab.setCout(x.getCout()+data.getCost(arccc));
-        							lab.setCoutdestination(x.getNode().getPoint().distanceTo(data.getDestination().getPoint())); //distance à vol d'oiseau entre le pt actuel et la dest
-        							lab.setCouttotal(lab.getCout()+lab.getCoutdestination());
-        							notifyNodeReached(y);
-        							try
-        							{
-        								distances.remove(lab);
-        							}
-        							catch(ElementNotFoundException E) {}
-        							finally
-        							{
-        								distances.insert(lab);
+							lab.setCout(xx.getCout()+data.getCost(arccc));
+							lab.setCoutdestination(xx.getNode().getPoint().distanceTo(data.getDestination().getPoint())); //distance à vol d'oiseau entre le pt actuel et la dest
+							lab.setCouttotal(lab.getCout()+lab.getCoutdestination());
+							notifyNodeReached(y);
+							try
+							{
+								distances.remove(lab);
+							}
+							catch(ElementNotFoundException E) {}
+							finally
+							{
+								distances.insert(lab);
 
-        								lab.setPrecedent(arccc); //on initialise son predecesseur
+								lab.setPrecedent(arccc); //on initialise son predecesseur
 
-        							}
+							}
         				}
 
         			}

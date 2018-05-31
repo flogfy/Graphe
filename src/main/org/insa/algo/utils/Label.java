@@ -8,20 +8,27 @@ public class Label implements Comparable<Label>{
 	private boolean marquage;
 	private int id;
 	private Node n;
+	private Node destination;
 	
-	public Label(Node N) {
+	public Label(Node N,Node destination) {
 		this.cout=Double.POSITIVE_INFINITY;
 		this.precedent=null;
 		this.marquage=false;
 		this.id = N.getId();
 		this.n=N;
+		this.destination=destination;
 	}
 
 	
 	
+	public Node getDestination() {
+		return destination;
+	}
+
+
+
 	@Override
 	public int compareTo(Label o) {
-		// TODO Auto-generated method stub
 		return comparer(o);
 	}
 	public int comparer(Label o) {
@@ -31,14 +38,14 @@ public class Label implements Comparable<Label>{
 		return n;
 	}
 	
-	
+	public double getCoutTotal() {
+		return cout;
+	}
 	
 	public double getCout() {
 		return cout;
 	}
-	public double getCouttotal() {
-		return(this.cout);
-	}
+
 
 	public void setCout(double cout) {
 		this.cout = cout;

@@ -1,4 +1,5 @@
 package Shortestpathtest;
+import static org.junit.Assert.*;
 import org.insa.algo.ArcInspectorFactory;
 import org.insa.algo.shortestpath.BellmanFordAlgorithm;
 import org.insa.algo.shortestpath.ShortestPathAlgorithm;
@@ -55,7 +56,7 @@ public abstract class testscenario {
 
 		//Read the path.
 		Path path = pathReader.readPath(graph);
-		
+		System.out.println("ok");
 		
 	/********SCENARIO******/
 		
@@ -76,7 +77,7 @@ public abstract class testscenario {
 				break;
 			}
 			case BICYCLE: {
-				testdata = new ShortestPathData(graph, scenario.getorigine(), scenario.getDestination(), ArcInspectorFactory.getAllFilters().get(6));
+				testdata = new ShortestPathData(graph, scenario.getorigine(), scenario.getDestination(), ArcInspectorFactory.getAllFilters().get(7));
 				break;
 			}
 			default:
@@ -94,7 +95,7 @@ public abstract class testscenario {
 				break;
 			}
 			case BICYCLE: {
-				testdata = new ShortestPathData(graph, scenario.getorigine(), scenario.getDestination(), ArcInspectorFactory.getAllFilters().get(7));
+				testdata = new ShortestPathData(graph, scenario.getorigine(), scenario.getDestination(), ArcInspectorFactory.getAllFilters().get(6));
 				break;
 			}
 			default:
@@ -110,7 +111,8 @@ public abstract class testscenario {
 		//Creation solutions
 		ShortestPathSolution Solutionobtenue = solution(testAlgo);//Resultat de l'ASTAR ou Dijkstra
 		ShortestPathSolution Solutionattendue = solution(oracle);//L'oracle est Bellmann-ford, c'est la référence
-	
+		//Check if both solutions are feasible or unfeasible
+		assertEquals(Solutionobtenue.isFeasible(), Solutionattendue.isFeasible());
 		if (!Solutionobtenue.isFeasible() && !Solutionattendue.isFeasible()) {
 			System.out.println("Chemin trouvé comme convenu");
 		} else if (Solutionobtenue.isFeasible() && !Solutionattendue.isFeasible()) {
@@ -142,7 +144,7 @@ public abstract class testscenario {
 	
 	public void algoIsValid() throws Exception { //Lancement du test, comprenant le choix de la carte, du chemin, du PCC voulu et du moyen de transport
 	
-		String path = "C:\\Users\\radureau\\Documents\\Graphes";
+		String path = "/home/radureau/Documents/workspaceeclipse/Graphe";
 		
 	
 		String[][] files = new String[17][2];//Tableau en deux dimensions, l'un pour le nom du chemin, l'autre pour le nom de la MAP
@@ -188,11 +190,13 @@ public abstract class testscenario {
 
 		
 		for(String[] file : files) {
-	        String pathName = path + "\\chemins\\" + file[0];
-	        String mapName  = path + "\\cartes\\" + file[1];
-	        //System.out.println( "\n" + file[0] + " & " + file[1]);
+	        String pathName = path + "/Paths/" + file[0];
+	        String mapName  = path + "/Maps/" + file[1];
+	        //scenarioTest(mapName, pathName, Mode.LENGTH, AccessMode.FOOT);
+	        System.out.println( "\n" + file[0] + " & " + file[1]);
 	        if (file[0].equals(files[13][0]) || file[0].equals(files[15][0])) {
 				scenarioTest(mapName, pathName, Mode.TIME, AccessMode.MOTORCAR);
+				System.out.println("ok");
 				scenarioTest(mapName, pathName, Mode.LENGTH, AccessMode.MOTORCAR);
 	        } else if (file[0].equals(files[14][0]) || file[0].equals(files[16][0])) {
 				scenarioTest(mapName, pathName, Mode.TIME, AccessMode.FOOT);
@@ -210,4 +214,5 @@ public abstract class testscenario {
 		}
 	}
 
+	
 }

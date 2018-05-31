@@ -5,7 +5,7 @@ import org.insa.algo.shortestpath.*;
 public class lancementscenarioastar extends testscenario {
 
 	lancementscenarioastar() {
-		super("Astar");
+		super("AstarAlgorithm");
 	}
 
 

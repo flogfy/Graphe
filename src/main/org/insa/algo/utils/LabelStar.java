@@ -9,20 +9,24 @@ public class LabelStar extends Label{
 	
 	private double coutdestination;
 	private double couttotal;
-	public LabelStar(Node N) {
-		super(N);
+	public LabelStar(Node N,Node destination) {
+		super(N, destination);
 		this.coutdestination=Double.POSITIVE_INFINITY;
 		this.couttotal=Double.POSITIVE_INFINITY;
 		
 		// TODO Auto-generated constructor stub
 	}
-	public int comparer(LabelStar o) {
-		if (Math.abs(this.couttotal-o.getCouttotal())<1) {
-			return(int)(this.coutdestination-o.getCoutdestination());
+	@Override
+	public int comparer(Label o) {
+		LabelStar l = (LabelStar) o;
+		l.setCoutdestination(l.getNode().getPoint().distanceTo(l.getDestination().getPoint()));
+		l.setCouttotal(l.getCout()+l.getCoutdestination());
+		if ((Math.abs(this.couttotal-l.getCouttotal()))<0.00005) {
+			return(int)(this.coutdestination-l.getCoutdestination());
 		}
 		else
 		{
-			return (int)(this.getCouttotal()-o.getCouttotal());
+			return (int)(this.couttotal-l.getCouttotal());
 		}
 	}
 	public double getCoutdestination() {

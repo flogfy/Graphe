@@ -41,7 +41,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm
     			}
 
         	listelabel.add(labeli);*/
-        Label labeli=new Label(data.getOrigin());
+        Label labeli=new Label(data.getOrigin(),data.getDestination());
     	labeli.setCout(0); //on met le 1er noeud à 0
         notifyOriginProcessed(data.getOrigin());
         listelabel[data.getOrigin().getId()]=labeli;
@@ -73,12 +73,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm
         	notifyNodeMarked(x.getNode());
         	for (Arc arccc : graph.get(x.getId())) //tous les arcs entrants ou sortants de x
         	{
+        		if (!data.isAllowed(arccc)) {
+					continue;
+        		}
         		if(arccc.getDestination()!=x.getNode()) //tous les arcs qui partent de x
         		{
         			Node y=arccc.getDestination(); //on recupere le successeur
         			if(listelabel[y.getId()]==null)
         			{
-        				lab = new Label(y);
+        				lab = new Label(y,data.getDestination());
         				listelabel[y.getId()]=lab;
         			}
         			else

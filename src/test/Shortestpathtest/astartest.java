@@ -139,13 +139,13 @@ public class astartest {
 					
 					if (astarSolution.isFeasible() && bellmanSolution.isFeasible()) {
 						//Check if both paths are valid
-						/*testIsValid(astarSolution,bellmanSolution);
+						testIsValid(astarSolution,bellmanSolution);
 						//Check if both paths have the same length
 						testSameLength(astarSolution,bellmanSolution);
 						//Check if both paths take the same time
-						testSameTime(astarSolution,bellmanSolution);
+						//testSameTime(astarSolution,bellmanSolution);
 						//Check if both paths have the same size
-						testSameSize(astarSolution,bellmanSolution);*/
+						//testSameSize(astarSolution,bellmanSolution);
 						message += astarSolution.getPath().getLength() + " ";
 					} else {
 						message+= "inf ";

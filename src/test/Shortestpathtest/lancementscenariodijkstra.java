@@ -2,15 +2,16 @@ package Shortestpathtest;
 
 import org.insa.algo.shortestpath.*;
 
+
 public class lancementscenariodijkstra extends testscenario {
 
 	lancementscenariodijkstra() {
-		super("Dijkstra");
+		super("DijkstraAlgorithm");
 	}
 
 
 	protected ShortestPathAlgorithm testedAlgo (ShortestPathData testdata) {
-		return new AStarAlgorithm(testdata);
+		return new DijkstraAlgorithm(testdata);
 	}
 
 	public static void main(String[] args) throws Exception {
