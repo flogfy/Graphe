@@ -2,7 +2,7 @@ package org.insa.algo.utils;
 
 import org.insa.graph.Node;
 
-import java.lang.Math;
+
 
 
 public class LabelStar extends Label{
@@ -21,7 +21,7 @@ public class LabelStar extends Label{
 		LabelStar l = (LabelStar) o;
 		l.setCoutdestination(l.getNode().getPoint().distanceTo(l.getDestination().getPoint()));
 		l.setCouttotal(l.getCout()+l.getCoutdestination());
-		if ((Math.abs(this.couttotal-l.getCouttotal()))<0.00005) {
+		if (this.couttotal-l.getCouttotal()<=0.005 && this.couttotal-l.getCouttotal()>=-0.005) {
 			return(int)(this.coutdestination-l.getCoutdestination());
 		}
 		else

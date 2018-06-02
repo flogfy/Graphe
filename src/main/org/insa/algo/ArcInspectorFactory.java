@@ -106,7 +106,7 @@ public class ArcInspectorFactory {
                 return "Fastest path, all roads allowed";
             }
         });
-/////3 voiture temps
+/////3 moto temps
         filters.add(new ArcInspector() {
             @Override
             public boolean isAllowed(Arc arc) {

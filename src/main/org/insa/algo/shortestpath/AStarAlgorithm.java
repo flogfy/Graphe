@@ -12,7 +12,7 @@ import org.insa.graph.Graph;
 import org.insa.graph.Node;
 import org.insa.graph.Path;
 
-public class AStarAlgorithm extends DijkstraAlgorithm 
+public class AStarAlgorithm extends ShortestPathAlgorithm
 {
 
     public AStarAlgorithm(ShortestPathData data) {
@@ -29,7 +29,8 @@ public class AStarAlgorithm extends DijkstraAlgorithm
      
         LabelStar LabelStari=new LabelStar(data.getOrigin(),data.getDestination());
     	LabelStari.setCout(0); //on met le 1er noeud à 0
-    	LabelStari.setCouttotal((0));
+    	LabelStari.setCoutdestination(data.getOrigin().getPoint().distanceTo(data.getDestination().getPoint()));
+    	LabelStari.setCouttotal(LabelStari.getCoutdestination());
         notifyOriginProcessed(data.getOrigin());
         listeLabelStar[data.getOrigin().getId()]=LabelStari;
         distances.insert(LabelStari);
